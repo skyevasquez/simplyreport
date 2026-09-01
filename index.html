@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simply Report — Download for Android</title>
+<meta name="description" content="Download Simply Report v1.0.0 for Android. Direct APK download with verified SHA-256 checksum and install instructions.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23111827'/><path d='M50 18 L78 30 V52 C78 68 66 79 50 84 C34 79 22 68 22 52 V30 Z' fill='none' stroke='%2338bdf8' stroke-width='6'/><path d='M38 51 L47 60 L64 41' fill='none' stroke='%2338bdf8' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+  :root {
+    --bg: #07090f;
+    --surface: #0d1117;
+    --border: #1e2633;
+    --text: #e6edf3;
+    --muted: #8b98a9;
+    --accent: #38bdf8;
+    --accent-2: #818cf8;
+    --good: #34d399;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image:
+      radial-gradient(ellipse 60% 40% at 50% -10%, rgba(56,189,248,0.12), transparent),
+      radial-gradient(ellipse 40% 30% at 80% 110%, rgba(129,140,248,0.08), transparent);
+  }
+  .wrap { width: 100%; max-width: 680px; padding: 56px 24px 40px; }
+  .org {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 28px;
+  }
+  .org::before { content: ""; width: 20px; height: 1px; background: var(--muted); }
+  h1 { font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+  .tagline { color: var(--muted); font-size: 1.05rem; margin-top: 12px; max-width: 34em; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .chip {
+    font-size: 12.5px; font-weight: 500; color: var(--accent);
+    background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.25);
+    padding: 4px 12px; border-radius: 999px;
+  }
+  .chip.neutral { color: var(--muted); background: rgba(139,152,169,0.07); border-color: var(--border); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 15.5px; font-weight: 600; text-decoration: none;
+    padding: 14px 26px; border-radius: 12px; cursor: pointer;
+    border: 1px solid transparent; transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn-primary {
+    color: #04121c;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 8px 28px rgba(56,189,248,0.25);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(56,189,248,0.35); }
+  .btn-secondary { color: var(--text); background: var(--surface); border-color: var(--border); }
+  .btn-secondary:hover { border-color: var(--muted); }
+  .btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .dl-note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 26px 28px; margin-top: 28px;
+  }
+  .card h2 { font-size: 1.05rem; font-weight: 650; letter-spacing: -0.01em; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+  .card h2 .n {
+    width: 24px; height: 24px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(56,189,248,0.12); color: var(--accent);
+    font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .steps { list-style: none; counter-reset: step; }
+  .steps li { position: relative; padding-left: 40px; margin-bottom: 16px; counter-increment: step; }
+  .steps li:last-child { margin-bottom: 0; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 26px; height: 26px; border-radius: 8px;
+    background: rgba(56,189,248,0.12); color: var(--accent);
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .steps b { font-weight: 650; }
+  .steps .sub { color: var(--muted); font-size: 14px; margin-top: 2px; }
+  .note {
+    margin-top: 18px; padding: 12px 16px; border-radius: 10px;
+    background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.2);
+    font-size: 13.5px; color: #a7f3d0;
+  }
+
+  .hash-row { display: flex; align-items: center; gap: 12px; }
+  .hash {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px; color: var(--muted);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+    flex: 1; overflow-x: auto; white-space: nowrap;
+  }
+  .copy-btn {
+    flex-shrink: 0; font-size: 13px; font-weight: 600;
+    color: var(--accent); background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56,189,248,0.25);
+    border-radius: 8px; padding: 9px 16px; cursor: pointer;
+    transition: background .15s ease;
+  }
+  .copy-btn:hover { background: rgba(56,189,248,0.15); }
+  .copy-btn.copied { color: var(--good); border-color: rgba(52,211,153,0.4); background: rgba(52,211,153,0.08); }
+  details { margin-top: 14px; }
+  summary { font-size: 13.5px; color: var(--muted); cursor: pointer; user-select: none; }
+  summary:hover { color: var(--accent); }
+  details .full {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px; color: var(--muted); word-break: break-all;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; margin-top: 10px;
+  }
+  details pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; color: var(--text);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; margin-top: 10px;
+    overflow-x: auto; line-height: 1.7;
+  }
+  details pre .c { color: var(--muted); }
+
+  footer {
+    margin-top: auto; padding: 32px 24px; text-align: center;
+    color: var(--muted); font-size: 13px; width: 100%;
+  }
+  footer a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+  footer a:hover { color: var(--accent); }
+  footer .pkg { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; margin-bottom: 6px; }
+  @media (max-width: 480px) { .wrap { padding-top: 40px; } .card { padding: 22px 20px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="org">Safe House Project</div>
+
+  <h1>Simply Report</h1>
+  <p class="tagline">Direct APK download for Android. Verify the checksum below before installing to confirm your copy is authentic.</p>
+
+  <div class="meta">
+    <span class="chip">v1.0.0</span>
+    <span class="chip neutral">12 MB</span>
+    <span class="chip neutral">Android 8.0+</span>
+    <span class="chip neutral">Signed release</span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-primary" id="download-btn"
+       href="https://github.com/skyevasquez/simplyreport/releases/download/v1.0.0/simplyreport-v1.0.0.apk"
+       download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Download APK
+    </a>
+    <a class="btn btn-secondary" id="release-btn" href="https://github.com/skyevasquez/simplyreport/releases" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.7 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.26 5.66.41.36.78 1.05.78 2.13v3.16c0 .31.21.67.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+  <p class="dl-note">Direct download · simplyreport-v1.0.0.apk · hosted on GitHub Releases</p>
+
+  <div class="card">
+    <h2>Install on Android</h2>
+    <ol class="steps">
+      <li>
+        <b>Download the APK</b> using the button above, directly on your Android device.
+        <div class="sub">If you downloaded it on a computer, transfer the file to your phone first.</div>
+      </li>
+      <li>
+        <b>Allow the install.</b> When Android prompts you, tap <b>Settings</b> and enable
+        <b>“Allow from this source”</b> for your browser (one time only).
+        <div class="sub">This appears because the app is distributed directly rather than through the Play Store.</div>
+      </li>
+      <li>
+        <b>Open the downloaded file and tap <span style="white-space:nowrap">Install</span>.</b>
+        <div class="sub">You may see a Play Protect warning for sideloaded apps — choose <b>Install anyway</b>.</div>
+      </li>
+    </ol>
+    <div class="note">✓ This is the official signed release. The APK is cryptographically signed by Safe House Project — Android will verify the signature at install time.</div>
+  </div>
+
+  <div class="card">
+    <h2>Verify integrity <span style="font-weight:400;color:var(--muted);font-size:.85rem">(optional, recommended)</span></h2>
+    <div class="hash-row">
+      <code class="hash">SHA-256&nbsp; 64b88b4d5e700d4f…f3558bc59</code>
+      <button class="copy-btn" id="copy-hash">Copy</button>
+    </div>
+    <details id="verify-details">
+      <summary>Show full checksum &amp; how to verify</summary>
+      <div class="full">64b88b4d5e700d4f4f754ba2fc5a471edeccbd7048f087300f6d735f3558bc59</div>
+      <pre><span class="c"># macOS / Linux</span>
+shasum -a 256 simplyreport-v1.0.0.apk
+
+<span class="c"># Windows (PowerShell)</span>
+Get-FileHash simplyreport-v1.0.0.apk -Algorithm SHA256
+
+<span class="c"># The output must match the checksum above.</span></pre>
+    </details>
+  </div>
+</div>
+
+<footer>
+  <div class="pkg">com.safehouse.simplyreport · versionName 1.0.0 (10)</div>
+  <div>Distributed via <a href="https://github.com/skyevasquez/simplyreport/releases" target="_blank" rel="noopener">GitHub Releases</a> · © 2026 Safe House Project</div>
+</footer>
+
+<script>
+  // ── PostHog analytics ────────────────────────────────────────────────
+  // Paste your PostHog project API key below (PostHog → Settings → Project API key, starts with "phc_").
+  // Until a key is set, the page works normally and tracking is disabled.
+  var POSTHOG_KEY  = "PASTE_YOUR_POSTHOG_PROJECT_API_KEY";
+  var POSTHOG_HOST = "https://us.i.posthog.com";
+
+  window.posthog = window.posthog || [];
+  window.posthog._i = window.posthog._i || [];
+  if (POSTHOG_KEY && POSTHOG_KEY.indexOf("phc_") === 0) {
+    (function (t, e) {
+      var o, n, p, r;
+      e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) {
+        function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]); t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))); }; }
+        (p = t.createElement("script")).type = "text/javascript", p.async = !0, p.src = s.api_host + "/static/array.js",
+        (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r);
+        var u = s; void 0 !== a ? e[u] = e[a] || [] : e[u] = e, e._i.push([i, a, 0]);
+      }, e.__SV = 1);
+    })(document, window.posthog);
+    posthog.init(POSTHOG_KEY, { api_host: POSTHOG_HOST, autocapture: true, capture_pageview: true });
+  }
+
+  function track(name, props) {
+    if (window.posthog && POSTHOG_KEY && POSTHOG_KEY.indexOf("phc_") === 0) {
+      posthog.capture(name, props);
+    }
+  }
+
+  var RELEASE_PROPS = { app: "simplyreport", version: "1.0.0", version_code: 10, sha256_prefix: "64b88b4d" };
+
+  document.getElementById("download-btn").addEventListener("click", function () {
+    track("download_clicked", Object.assign({ file: "simplyreport-v1.0.0.apk", size_mb: 12, platform: "android" }, RELEASE_PROPS));
+  });
+  document.getElementById("release-btn").addEventListener("click", function () {
+    track("github_release_clicked", RELEASE_PROPS);
+  });
+  document.getElementById("verify-details").addEventListener("toggle", function () {
+    if (this.open) track("checksum_expanded", RELEASE_PROPS);
+  });
+  document.getElementById("copy-hash").addEventListener("click", function () {
+    var btn = this;
+    navigator.clipboard.writeText("64b88b4d5e700d4f4f754ba2fc5a471edeccbd7048f087300f6d735f3558bc59").then(function () {
+      btn.textContent = "Copied ✓"; btn.classList.add("copied");
+      setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
+    });
+    track("checksum_copied", RELEASE_PROPS);
+  });
+</script>
+</body>
+</html>
