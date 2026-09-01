@@ -151,6 +151,7 @@
     <span class="chip neutral">12 MB</span>
     <span class="chip neutral">Android 8.0+</span>
     <span class="chip neutral">Signed release</span>
+    <span class="chip neutral" id="dl-count" hidden></span>
   </div>
 
   <div class="actions">
@@ -213,51 +214,28 @@ Get-FileHash simplyreport-v1.0.0.apk -Algorithm SHA256
 </footer>
 
 <script>
-  // ── PostHog analytics ────────────────────────────────────────────────
-  // Paste your PostHog project API key below (PostHog → Settings → Project API key, starts with "phc_").
-  // Until a key is set, the page works normally and tracking is disabled.
-  var POSTHOG_KEY  = "PASTE_YOUR_POSTHOG_PROJECT_API_KEY";
-  var POSTHOG_HOST = "https://us.i.posthog.com";
+  // Download counts are counted server-side by GitHub on the release asset —
+  // no third-party tracking. Fetched from the public API; hidden if the call fails.
+  fetch("https://api.github.com/repos/skyevasquez/simplyreport/releases")
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (releases) {
+      var total = releases.reduce(function (n, rel) {
+        return n + rel.assets.reduce(function (m, a) { return m + a.download_count; }, 0);
+      }, 0);
+      if (total > 0) {
+        var el = document.getElementById("dl-count");
+        el.textContent = total.toLocaleString() + (total === 1 ? " download" : " downloads");
+        el.hidden = false;
+      }
+    })
+    .catch(function () {});
 
-  window.posthog = window.posthog || [];
-  window.posthog._i = window.posthog._i || [];
-  if (POSTHOG_KEY && POSTHOG_KEY.indexOf("phc_") === 0) {
-    (function (t, e) {
-      var o, n, p, r;
-      e.__SV || (window.posthog = e, e._i = [], e.init = function (i, s, a) {
-        function g(t, e) { var o = e.split("."); 2 == o.length && (t = t[o[0]], e = o[1]); t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))); }; }
-        (p = t.createElement("script")).type = "text/javascript", p.async = !0, p.src = s.api_host + "/static/array.js",
-        (r = t.getElementsByTagName("script")[0]).parentNode.insertBefore(p, r);
-        var u = s; void 0 !== a ? e[u] = e[a] || [] : e[u] = e, e._i.push([i, a, 0]);
-      }, e.__SV = 1);
-    })(document, window.posthog);
-    posthog.init(POSTHOG_KEY, { api_host: POSTHOG_HOST, autocapture: true, capture_pageview: true });
-  }
-
-  function track(name, props) {
-    if (window.posthog && POSTHOG_KEY && POSTHOG_KEY.indexOf("phc_") === 0) {
-      posthog.capture(name, props);
-    }
-  }
-
-  var RELEASE_PROPS = { app: "simplyreport", version: "1.0.0", version_code: 10, sha256_prefix: "64b88b4d" };
-
-  document.getElementById("download-btn").addEventListener("click", function () {
-    track("download_clicked", Object.assign({ file: "simplyreport-v1.0.0.apk", size_mb: 12, platform: "android" }, RELEASE_PROPS));
-  });
-  document.getElementById("release-btn").addEventListener("click", function () {
-    track("github_release_clicked", RELEASE_PROPS);
-  });
-  document.getElementById("verify-details").addEventListener("toggle", function () {
-    if (this.open) track("checksum_expanded", RELEASE_PROPS);
-  });
   document.getElementById("copy-hash").addEventListener("click", function () {
     var btn = this;
     navigator.clipboard.writeText("64b88b4d5e700d4f4f754ba2fc5a471edeccbd7048f087300f6d735f3558bc59").then(function () {
       btn.textContent = "Copied ✓"; btn.classList.add("copied");
       setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 2000);
     });
-    track("checksum_copied", RELEASE_PROPS);
   });
 </script>
 </body>

@@ -17,19 +17,21 @@ Download page and release hosting for **Simply Report** (`com.safehouse.simplyre
    gh release create vX.Y.Z simplyreport-vX.Y.Z.apk SHA256SUMS.txt \
      --title "vX.Y.Z" --notes "…"
    ```
-4. **Update the download page** (`index.html`): version chip, APK filename/URL, size, SHA-256 (truncated + full), and the `RELEASE_PROPS` analytics object.
+4. **Update the download page** (`index.html`): version chip, APK filename/URL, size, SHA-256 (truncated + full).
 5. Commit and push — GitHub Pages redeploys automatically.
 
-## Analytics
+## Analytics (GitHub-native, no third-party tracking)
 
-The page tracks via [PostHog](https://posthog.com): page views, `download_clicked`, `checksum_copied`, `checksum_expanded`, and `github_release_clicked`.
+Download counts are counted server-side by GitHub on the release asset — every hit on the asset URL counts, even direct links shared elsewhere.
 
-To activate, paste your PostHog **project API key** (starts with `phc_`) into `POSTHOG_KEY` at the bottom of `index.html`. Until then, the page works normally with tracking disabled.
-
-Release download counts are also available from GitHub:
-```bash
-gh api repos/skyevasquez/simplyreport/releases --jq '.[].assets[] | {name, download_count}'
-```
+- **Download counts via API:**
+  ```bash
+  gh api repos/skyevasquez/simplyreport/releases --jq '.[] | .tag_name as $t | .assets[] | "\($t)  \(.name): \(.download_count) downloads"'
+  ```
+- **On the release page:** asset download counts show next to each file at
+  https://github.com/skyevasquez/simplyreport/releases
+- **On the download page:** a live "N downloads" chip is rendered from the public GitHub API.
+- **Repo traffic** (visitors, views, clones, referrers): https://github.com/skyevasquez/simplyreport/graphs/traffic — note this covers repo traffic only; GitHub does not expose GitHub Pages pageviews via API.
 
 ## Verifying a download
 
